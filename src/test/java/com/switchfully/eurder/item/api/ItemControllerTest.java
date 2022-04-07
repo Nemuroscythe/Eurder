@@ -1,6 +1,5 @@
 package com.switchfully.eurder.item.api;
 
-import com.switchfully.eurder.customer.service.CustomerMapper;
 import com.switchfully.eurder.item.api.dto.ItemDto;
 import com.switchfully.eurder.item.domain.Item;
 import com.switchfully.eurder.item.service.ItemMapper;
