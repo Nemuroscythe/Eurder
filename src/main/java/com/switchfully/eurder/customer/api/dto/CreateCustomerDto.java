@@ -1,6 +1,6 @@
 package com.switchfully.eurder.customer.api.dto;
 
-public class CreateCustomerDto {
+public class CreateCustomerDto implements CustomerDtoInterface{
 
     private final String firstName;
     private final String lastName;

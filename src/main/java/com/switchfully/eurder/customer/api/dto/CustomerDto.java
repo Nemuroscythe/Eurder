@@ -1,6 +1,8 @@
 package com.switchfully.eurder.customer.api.dto;
 
-public class CustomerDto {
+import com.switchfully.eurder.customer.infrastructure.Email;
+
+public class CustomerDto implements CustomerDtoInterface {
 
     private final String customerId;
     private final String firstName;

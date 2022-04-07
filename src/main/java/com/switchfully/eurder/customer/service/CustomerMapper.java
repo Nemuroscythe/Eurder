@@ -2,6 +2,7 @@ package com.switchfully.eurder.customer.service;
 
 import com.switchfully.eurder.customer.api.dto.CreateCustomerDto;
 import com.switchfully.eurder.customer.api.dto.CustomerDto;
+import com.switchfully.eurder.customer.api.dto.CustomerDtoInterface;
 import com.switchfully.eurder.customer.domain.Customer;
 import org.springframework.stereotype.Component;
 
@@ -17,13 +18,13 @@ public class CustomerMapper {
                 customer.getPhoneNumber());
     }
 
-    public Customer toCustomer(CreateCustomerDto createCustomerDto) {
+    public Customer toCustomer(CustomerDtoInterface customerDto) {
         return new Customer(
-                createCustomerDto.getFirstName(),
-                createCustomerDto.getLastName(),
-                createCustomerDto.getEmailAddress(),
-                createCustomerDto.getAddress(),
-                createCustomerDto.getPhoneNumber()
+                customerDto.getFirstName(),
+                customerDto.getLastName(),
+                customerDto.getEmailAddress(),
+                customerDto.getAddress(),
+                customerDto.getPhoneNumber()
         );
     }
 }

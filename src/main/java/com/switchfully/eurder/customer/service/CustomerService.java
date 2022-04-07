@@ -17,7 +17,7 @@ public class CustomerService {
         this.customerRepository = customerRepository;
     }
 
-    public CustomerDto createCustomer(CreateCustomerDto createCustomerDto){
+    public CustomerDto createCustomer(CreateCustomerDto createCustomerDto) {
         Customer customer = customerMapper.toCustomer(createCustomerDto);
         customerRepository.saveCustomer(customer);
         return customerMapper.toDto(customer);
