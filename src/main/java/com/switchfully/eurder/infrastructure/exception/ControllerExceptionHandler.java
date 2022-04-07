@@ -1,4 +1,4 @@
-package com.switchfully.eurder.customer.infrastructure.exception;
+package com.switchfully.eurder.infrastructure.exception;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

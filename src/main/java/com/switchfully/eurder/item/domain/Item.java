@@ -9,6 +9,14 @@ public class Item {
     private double price;
     private int stockAmount;
 
+    public Item (Item originalItem) {
+        this.itemId = originalItem.getItemId();
+        this.name = originalItem.getName();
+        this.description = originalItem.getDescription();
+        this.price = originalItem.getPrice();
+        this.stockAmount = originalItem.getStockAmount();
+    }
+
     public Item(String name, String description, double price, int stockAmount) {
         this.itemId = UUID.randomUUID().toString();
         this.name = name;

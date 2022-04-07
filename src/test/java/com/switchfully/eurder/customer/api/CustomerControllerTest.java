@@ -2,7 +2,6 @@ package com.switchfully.eurder.customer.api;
 
 import com.switchfully.eurder.customer.api.dto.CustomerDto;
 import com.switchfully.eurder.customer.domain.Customer;
-import com.switchfully.eurder.customer.infrastructure.exception.IllegalEmailException;
 import com.switchfully.eurder.customer.service.CustomerMapper;
 import io.restassured.RestAssured;
 import org.assertj.core.api.Assertions;

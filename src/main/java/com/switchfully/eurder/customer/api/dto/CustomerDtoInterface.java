@@ -1,7 +1,5 @@
 package com.switchfully.eurder.customer.api.dto;
 
-import com.switchfully.eurder.customer.infrastructure.Email;
-
 public interface CustomerDtoInterface {
 
     public String getFirstName();

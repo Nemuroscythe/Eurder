@@ -1,4 +1,4 @@
-package com.switchfully.eurder.customer.infrastructure.exception;
+package com.switchfully.eurder.infrastructure.exception;
 
 public class IllegalEmailException extends RuntimeException {
 

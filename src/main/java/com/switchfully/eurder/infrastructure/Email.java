@@ -1,6 +1,6 @@
-package com.switchfully.eurder.customer.infrastructure;
+package com.switchfully.eurder.infrastructure;
 
-import com.switchfully.eurder.customer.infrastructure.exception.IllegalEmailException;
+import com.switchfully.eurder.infrastructure.exception.IllegalEmailException;
 import org.apache.commons.validator.routines.EmailValidator;
 
 public class Email {

@@ -1,6 +1,6 @@
 package com.switchfully.eurder.customer.domain;
 
-import com.switchfully.eurder.customer.infrastructure.Email;
+import com.switchfully.eurder.infrastructure.Email;
 
 import java.util.UUID;
 
