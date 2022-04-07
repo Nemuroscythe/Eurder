@@ -1,19 +1,25 @@
-package com.switchfully.eurder.customers.api.dto;
+package com.switchfully.eurder.customer.api.dto;
 
-public class CreateCustomerDto {
+public class CustomerDto {
 
+    private final String customerId;
     private final String firstName;
     private final String lastName;
     private final String emailAddress;
     private final String address;
     private final String phoneNumber;
 
-    public CreateCustomerDto(String firstName, String lastName, String emailAddress, String address, String phoneNumber) {
+    public CustomerDto(String customerId, String firstName, String lastName, String emailAddress, String address, String phoneNumber) {
+        this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;
         this.address = address;
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getCustomerId() {
+        return customerId;
     }
 
     public String getFirstName() {

@@ -1,4 +1,4 @@
-package com.switchfully.eurder.customers.domain;
+package com.switchfully.eurder.customer.domain;
 
 import java.util.UUID;
 

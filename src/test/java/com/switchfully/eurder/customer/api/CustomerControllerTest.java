@@ -1,8 +1,8 @@
-package com.switchfully.eurder.customers.api;
+package com.switchfully.eurder.customer.api;
 
-import com.switchfully.eurder.customers.domain.Customer;
-import com.switchfully.eurder.customers.api.dto.CustomerDto;
-import com.switchfully.eurder.customers.service.CustomerMapper;
+import com.switchfully.eurder.customer.domain.Customer;
+import com.switchfully.eurder.customer.api.dto.CustomerDto;
+import com.switchfully.eurder.customer.service.CustomerMapper;
 import io.restassured.RestAssured;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

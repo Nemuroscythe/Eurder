@@ -1,13 +1,13 @@
-package com.switchfully.eurder.customers.api;
+package com.switchfully.eurder.customer.api;
 
-import com.switchfully.eurder.customers.api.dto.CreateCustomerDto;
-import com.switchfully.eurder.customers.api.dto.CustomerDto;
-import com.switchfully.eurder.customers.service.CustomerService;
+import com.switchfully.eurder.customer.api.dto.CreateCustomerDto;
+import com.switchfully.eurder.customer.api.dto.CustomerDto;
+import com.switchfully.eurder.customer.service.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "customers")
+@RequestMapping(path = "/customers")
 public class CustomerController {
 
     private final CustomerService customerService;
