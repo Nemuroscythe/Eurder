@@ -35,5 +35,19 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
                                         HttpServletResponse response) throws IOException {
         response.sendError(BAD_REQUEST.value(), ex.getMessage());
     }
+
+
+    @ExceptionHandler(NullDescriptionException.class)
+    protected void NullDescriptionException(NullDescriptionException ex,
+                                            HttpServletResponse response) throws IOException {
+        response.sendError(BAD_REQUEST.value(), ex.getMessage());
+    }
+
+
+    @ExceptionHandler(NegativeNumberException.class)
+    protected void NegativeNumberException(NegativeNumberException ex,
+                                            HttpServletResponse response) throws IOException {
+        response.sendError(BAD_REQUEST.value(), ex.getMessage());
+    }
 // other @ExceptionHandler annotated methods handling different exceptions in different ways.
 }

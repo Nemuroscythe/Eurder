@@ -48,4 +48,112 @@ class ItemControllerTest {
         Assertions.assertThat(actualItemDto.getPrice()).isEqualTo(expectedItemDto.getPrice());
         Assertions.assertThat(actualItemDto.getStockAmount()).isEqualTo(expectedItemDto.getStockAmount());
     }
+
+    @Test
+    void givenItemWithNameNull_WhenAddingItem_ThenBadRequest() {
+        //  GIVEN
+        Item expectedItem = new Item(null, "Boar meatballs to grow strong", 5.5, 15);
+        //  WHEN
+        RestAssured
+                .given()
+                .port(port)
+                .body(expectedItem)
+                .contentType(JSON)
+                .when()
+                .accept(JSON)
+                .post("/items")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void givenItemWithNameBlank_WhenAddingItem_ThenBadRequest() {
+        //  GIVEN
+        Item expectedItem = new Item("  ", "Boar meatballs to grow strong", 5.5, 15);
+        //  WHEN
+        RestAssured
+                .given()
+                .port(port)
+                .body(expectedItem)
+                .contentType(JSON)
+                .when()
+                .accept(JSON)
+                .post("/items")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void givenItemWithDescriptionNull_WhenAddingItem_ThenBadRequest() {
+        //  GIVEN
+        Item expectedItem = new Item("Meatballs", null, 5.5, 15);
+        //  WHEN
+        RestAssured
+                .given()
+                .port(port)
+                .body(expectedItem)
+                .contentType(JSON)
+                .when()
+                .accept(JSON)
+                .post("/items")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void givenItemWithDescriptionBlank_WhenAddingItem_ThenBadRequest() {
+        //  GIVEN
+        Item expectedItem = new Item("Meatballs", "  ", 5.5, 15);
+        //  WHEN
+        RestAssured
+                .given()
+                .port(port)
+                .body(expectedItem)
+                .contentType(JSON)
+                .when()
+                .accept(JSON)
+                .post("/items")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void givenItemWithPriceNegative_WhenAddingItem_ThenBadRequest() {
+        //  GIVEN
+        Item expectedItem = new Item("Meatballs", "Boar meatballs to grow strong", -1, 15);
+        //  WHEN
+        RestAssured
+                .given()
+                .port(port)
+                .body(expectedItem)
+                .contentType(JSON)
+                .when()
+                .accept(JSON)
+                .post("/items")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void givenItemWithStockAmountNegative_WhenAddingItem_ThenBadRequest() {
+        //  GIVEN
+        Item expectedItem = new Item("Meatballs", "Boar meatballs to grow strong", 5.5, -5);
+        //  WHEN
+        RestAssured
+                .given()
+                .port(port)
+                .body(expectedItem)
+                .contentType(JSON)
+                .when()
+                .accept(JSON)
+                .post("/items")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
 }

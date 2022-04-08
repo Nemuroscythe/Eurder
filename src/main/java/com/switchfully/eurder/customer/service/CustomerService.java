@@ -7,11 +7,11 @@ import com.switchfully.eurder.customer.domain.CustomerRepository;
 import com.switchfully.eurder.infrastructure.exception.IllegalEmailException;
 import com.switchfully.eurder.infrastructure.exception.NullAddressException;
 import com.switchfully.eurder.infrastructure.exception.NullNameException;
+import com.switchfully.eurder.infrastructure.utility.FieldValidation;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class CustomerService {
@@ -36,10 +36,10 @@ public class CustomerService {
 
     private void customerFieldsValidation(CreateCustomerDto createCustomerDto) {
         emailValidation(createCustomerDto.getEmailAddress());
-        nullSafeBlankCheck(createCustomerDto.getFirstName(), new NullNameException(), "First name null or blank!");
-        nullSafeBlankCheck(createCustomerDto.getLastName(), new NullNameException(), "Last name null or blank!");
-        nullSafeBlankCheck(createCustomerDto.getAddress(), new NullAddressException(), "Address null or blank!");
-        nullSafeBlankCheck(createCustomerDto.getPhoneNumber(), new NullAddressException(), "Phone number null or blank!");
+        FieldValidation.stringNullSafeBlankCheck(createCustomerDto.getFirstName(), new NullNameException(), "First name null or blank!", serviceLogger);
+        FieldValidation.stringNullSafeBlankCheck(createCustomerDto.getLastName(), new NullNameException(), "Last name null or blank!", serviceLogger);
+        FieldValidation.stringNullSafeBlankCheck(createCustomerDto.getAddress(), new NullAddressException(), "Address null or blank!", serviceLogger);
+        FieldValidation.stringNullSafeBlankCheck(createCustomerDto.getPhoneNumber(), new NullAddressException(), "Phone number null or blank!", serviceLogger);
     }
 
     private void emailValidation(String emailAddress) {
@@ -49,10 +49,10 @@ public class CustomerService {
         }
     }
 
-    private void nullSafeBlankCheck(String stringToCheck, RuntimeException exception, String errorMessage) {
-        if (stringToCheck == null || stringToCheck.isBlank()) {
-            serviceLogger.error(errorMessage);
-            throw exception;
-        }
-    }
+//    private void nullSafeBlankCheck(String stringToCheck, RuntimeException exception, String errorMessage) {
+//        if (stringToCheck == null || stringToCheck.isBlank()) {
+//            serviceLogger.error(errorMessage);
+//            throw exception;
+//        }
+//    }
 }

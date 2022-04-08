@@ -9,7 +9,7 @@ public class Item {
     private double price;
     private int stockAmount;
 
-    public Item (Item originalItem) {
+    public Item(Item originalItem) {
         this.itemId = originalItem.getItemId();
         this.name = originalItem.getName();
         this.description = originalItem.getDescription();
