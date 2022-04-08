@@ -68,6 +68,8 @@ class CustomerControllerTest {
                 .statusCode(HttpStatus.BAD_REQUEST.value());
     }
 
+
+
     @Test
     void givenCustomerWithFirstNameNull_WhenCreateCustomer_ThenBadRequest() {
         //  GIVEN
@@ -86,11 +88,46 @@ class CustomerControllerTest {
                 .statusCode(HttpStatus.BAD_REQUEST.value());
     }
 
+    @Test
+    void givenCustomerWithFirstNameBlank_WhenCreateCustomer_ThenBadRequest() {
+        //  GIVEN
+        Customer expectedCustomer = new Customer("  ", "TheGallic", "parToutatis@gallic.com", "5, Boarstreet", "0471/00.88.71");
+        //  WHEN
+        RestAssured
+                .given()
+                .port(port)
+                .body(expectedCustomer)
+                .contentType(JSON)
+                .when()
+                .accept(JSON)
+                .post("/customers")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
 
     @Test
     void givenCustomerWithLastNameNull_WhenCreateCustomer_ThenBadRequest() {
         //  GIVEN
         Customer expectedCustomer = new Customer("Asterix", null, "parToutatis@gallic.com", "5, Boarstreet", "0471/00.88.71");
+        //  WHEN
+        RestAssured
+                .given()
+                .port(port)
+                .body(expectedCustomer)
+                .contentType(JSON)
+                .when()
+                .accept(JSON)
+                .post("/customers")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void givenCustomerWithLastNameBlank_WhenCreateCustomer_ThenBadRequest() {
+        //  GIVEN
+        Customer expectedCustomer = new Customer("Asterix", "  ", "parToutatis@gallic.com", "5, Boarstreet", "0471/00.88.71");
         //  WHEN
         RestAssured
                 .given()
@@ -124,9 +161,46 @@ class CustomerControllerTest {
     }
 
     @Test
+    void givenCustomerWithAddressBlank_WhenCreateCustomer_ThenBadRequest() {
+        //  GIVEN
+        Customer expectedCustomer = new Customer("Asterix", "TheGallic", "parToutatis@gallic.com", "  ", "0471/00.88.71");
+        //  WHEN
+        RestAssured
+                .given()
+                .port(port)
+                .body(expectedCustomer)
+                .contentType(JSON)
+                .when()
+                .accept(JSON)
+                .post("/customers")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
     void givenCustomerWithPhoneNumberNull_WhenCreateCustomer_ThenBadRequest() {
         //  GIVEN
         Customer expectedCustomer = new Customer("Asterix", "TheGallic", "parToutatis@gallic.com", "5, Boarstreet", null);
+        //  WHEN
+        RestAssured
+                .given()
+                .port(port)
+                .body(expectedCustomer)
+                .contentType(JSON)
+                .when()
+                .accept(JSON)
+                .post("/customers")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+
+    @Test
+    void givenCustomerWithPhoneNumberBlank_WhenCreateCustomer_ThenBadRequest() {
+        //  GIVEN
+        Customer expectedCustomer = new Customer("Asterix", "TheGallic", "parToutatis@gallic.com", "5, Boarstreet", "  ");
         //  WHEN
         RestAssured
                 .given()
