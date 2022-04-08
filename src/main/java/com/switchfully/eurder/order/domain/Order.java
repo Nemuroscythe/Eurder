@@ -1,7 +1,5 @@
 package com.switchfully.eurder.order.domain;
 
-import com.switchfully.eurder.customer.domain.Customer;
-
 import java.util.UUID;
 
 public class Order {
@@ -18,6 +16,22 @@ public class Order {
     }
 
     private double calculateTotalPrice(ItemGroup itemGroup) {
-        return itemGroup.getTotalPrice();
+        return itemGroup.calculateItemGroupTotalPrice();
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public ItemGroup getItemGroup() {
+        return itemGroup;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
     }
 }

@@ -1,9 +1,24 @@
 package com.switchfully.eurder.order.api;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.switchfully.eurder.order.api.dto.CreateOrderDto;
+import com.switchfully.eurder.order.api.dto.OrderDto;
+import com.switchfully.eurder.order.service.OrderService;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/order")
+@RequestMapping("/orders")
 public class OrderController {
+
+    private final OrderService serviceOrder;
+
+    public OrderController(OrderService serviceOrder) {
+        this.serviceOrder = serviceOrder;
+    }
+
+    @PostMapping(consumes = "application/json", produces = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public OrderDto orderItems(@RequestBody CreateOrderDto createOrderDto){
+        return serviceOrder.orderItems(createOrderDto);
+    }
 }
