@@ -1,22 +1,40 @@
 package com.switchfully.eurder.order.domain;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 public class Order {
     private String orderId;
     private String customerId;
-    private ItemGroup itemGroup;
+    private List<ItemGroup> itemGroupList;
     private double totalPrice;
+    private static Logger ORDER_LOGGER = LoggerFactory.getLogger(Order.class);
 
     public Order(String customerId, ItemGroup itemGroup) {
-        this.orderId = UUID.randomUUID().toString();
-        this.customerId = customerId;
-        this.itemGroup = itemGroup;
-        this.totalPrice = calculateTotalPrice(itemGroup);
+        this(customerId, new ArrayList<>(Arrays.asList(itemGroup)));
     }
 
-    private double calculateTotalPrice(ItemGroup itemGroup) {
-        return itemGroup.calculateItemGroupTotalPrice();
+    public Order(String customerId, List<ItemGroup> itemGroupList) {
+        if (customerId == null) {
+            ORDER_LOGGER.error("CustomerId is null");
+            throw new NullPointerException("Provide a customer id");
+        }
+
+        this.orderId = UUID.randomUUID().toString();
+        this.customerId = customerId;
+        this.itemGroupList = itemGroupList;
+        this.totalPrice = calculateTotalPrice(itemGroupList);
+    }
+
+    private double calculateTotalPrice(List<ItemGroup> itemGroupList) {
+        return itemGroupList.stream()
+                .map(ItemGroup::calculateItemGroupTotalPrice)
+                .reduce(0.5, Double::sum);
     }
 
     public String getOrderId() {
@@ -27,8 +45,8 @@ public class Order {
         return customerId;
     }
 
-    public ItemGroup getItemGroup() {
-        return itemGroup;
+    public List<ItemGroup> getItemGroupList() {
+        return itemGroupList;
     }
 
     public double getTotalPrice() {

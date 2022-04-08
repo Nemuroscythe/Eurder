@@ -1,6 +1,11 @@
 package com.switchfully.eurder.order.domain;
 
+import com.switchfully.eurder.infrastructure.exception.NegativeNumberException;
+import com.switchfully.eurder.infrastructure.exception.NullItemException;
+import com.switchfully.eurder.infrastructure.utility.FieldValidation;
 import com.switchfully.eurder.item.domain.Item;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -11,8 +16,15 @@ public class ItemGroup {
     private Item item;
     private int amount;
     private LocalDate shippingDate;
+    private static Logger ITEM_GROUP_LOGGER = LoggerFactory.getLogger(ItemGroup.class);
 
     public ItemGroup(Item item, int amount) {
+        if (item == null) {
+            ITEM_GROUP_LOGGER.error("The item is null!");
+            throw new NullItemException();
+        }
+        FieldValidation.numberPositiveCheck(amount, new NegativeNumberException(),
+                "The amount that you want to order cannot be negative", ITEM_GROUP_LOGGER);
         this.item = new Item(item);
         this.amount = amount;
         shippingDate = calculateShippingDate(item, amount);
@@ -25,7 +37,7 @@ public class ItemGroup {
         return LocalDate.now().plusDays(DELIVERY_DELAY_WHEN_IN_STOCK);
     }
 
-    public double calculateItemGroupTotalPrice(){
+    public double calculateItemGroupTotalPrice() {
         return amount * item.getPrice();
     }
 

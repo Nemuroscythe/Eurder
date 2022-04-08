@@ -2,16 +2,18 @@ package com.switchfully.eurder.order.api.dto;
 
 import com.switchfully.eurder.order.domain.ItemGroup;
 
+import java.util.List;
+
 public class OrderDto {
     private String orderId;
     private String customerId;
-    private ItemGroup itemGroup;
+    private List<ItemGroup> itemGroupList;
     private double totalPrice;
 
-    public OrderDto(String orderId, String customerId, ItemGroup itemGroup, double totalPrice) {
+    public OrderDto(String orderId, String customerId, List<ItemGroup> itemGroupList, double totalPrice) {
         this.orderId = orderId;
         this.customerId = customerId;
-        this.itemGroup = itemGroup;
+        this.itemGroupList = itemGroupList;
         this.totalPrice = totalPrice;
     }
 
@@ -23,8 +25,8 @@ public class OrderDto {
         return customerId;
     }
 
-    public ItemGroup getItemGroup() {
-        return itemGroup;
+    public List<ItemGroup> getItemGroupList() {
+        return itemGroupList;
     }
 
     public double getTotalPrice() {

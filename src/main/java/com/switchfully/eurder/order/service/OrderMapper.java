@@ -11,7 +11,7 @@ public class OrderMapper {
     public Order toOrder(CreateOrderDto createOrderDto) {
         return new Order(
                 createOrderDto.getCustomerId(),
-                createOrderDto.getItemGroup()
+                createOrderDto.getItemGroupList()
         );
     }
 
@@ -19,7 +19,7 @@ public class OrderMapper {
         return new OrderDto(
                 order.getOrderId(),
                 order.getCustomerId(),
-                order.getItemGroup(),
+                order.getItemGroupList(),
                 order.getTotalPrice()
         );
     }
