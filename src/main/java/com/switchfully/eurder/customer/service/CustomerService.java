@@ -38,7 +38,7 @@ public class CustomerService {
         emailValidation(createCustomerDto.getEmailAddress());
         FieldValidation.stringNullSafeBlankCheck(createCustomerDto.getFirstName(), new NullNameException(), "First name null or blank!", serviceLogger);
         FieldValidation.stringNullSafeBlankCheck(createCustomerDto.getLastName(), new NullNameException(), "Last name null or blank!", serviceLogger);
-        FieldValidation.stringNullSafeBlankCheck(createCustomerDto.getAddress(), new NullAddressException(), "Address null or blank!", serviceLogger);
+//        FieldValidation.stringNullSafeBlankCheck(createCustomerDto.getAddress(), new NullAddressException(), "Address null or blank!", serviceLogger);
         FieldValidation.stringNullSafeBlankCheck(createCustomerDto.getPhoneNumber(), new NullAddressException(), "Phone number null or blank!", serviceLogger);
     }
 
@@ -49,10 +49,4 @@ public class CustomerService {
         }
     }
 
-//    private void nullSafeBlankCheck(String stringToCheck, RuntimeException exception, String errorMessage) {
-//        if (stringToCheck == null || stringToCheck.isBlank()) {
-//            serviceLogger.error(errorMessage);
-//            throw exception;
-//        }
-//    }
 }

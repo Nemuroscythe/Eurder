@@ -15,7 +15,6 @@ class OrderTest {
         Item item = new Item("Bone", "A bone your dog can play with", 5, 10);
         ItemGroup itemGroup = new ItemGroup(item, 2);
         //  WHEN
-
         //  THEN
         Assertions.assertThatExceptionOfType(NullPointerException.class)
                 .isThrownBy(() ->

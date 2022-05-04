@@ -1,5 +1,8 @@
 package com.switchfully.eurder.customer.domain;
 
+
+import com.switchfully.eurder.address.domain.Address;
+
 import java.util.UUID;
 
 public class Customer {
@@ -8,10 +11,10 @@ public class Customer {
     private final String firstName;
     private final String lastName;
     private final String emailAddress;
-    private final String address;
+    private final Address address;
     private final String phoneNumber;
 
-    public Customer(String firstName, String lastName, String emailAddress, String address, String phoneNumber) {
+    public Customer(String firstName, String lastName, String emailAddress, Address address, String phoneNumber) {
         this.customerId = UUID.randomUUID().toString();
         this.firstName = firstName;
         this.lastName = lastName;
@@ -36,7 +39,7 @@ public class Customer {
         return emailAddress;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 

@@ -1,5 +1,6 @@
 package com.switchfully.eurder.order.api;
 
+import com.switchfully.eurder.address.domain.Address;
 import com.switchfully.eurder.customer.domain.Customer;
 import com.switchfully.eurder.customer.domain.CustomerRepository;
 import com.switchfully.eurder.item.domain.Item;
@@ -8,6 +9,7 @@ import com.switchfully.eurder.item_group.api.dto.CreateItemGroupDto;
 import com.switchfully.eurder.order.api.dto.CreateOrderDto;
 import com.switchfully.eurder.order.api.dto.OrderDto;
 import com.switchfully.eurder.order.service.OrderMapper;
+import com.switchfully.eurder.postal_code.domain.PostalCode;
 import io.restassured.RestAssured;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,8 +33,6 @@ class OrderControllerTest {
     @LocalServerPort
     private int port;
     @Autowired
-    private OrderMapper orderMapper;
-    @Autowired
     private CustomerRepository customerRepository;
     @Autowired
     private ItemRepository itemRepository;
@@ -42,7 +42,9 @@ class OrderControllerTest {
 
     @BeforeEach
     void setUp() {
-        customerInDB = new Customer("Asterix", "TheGallic", "parToutatis@gallic.com", "5, Boarstreet", "0471/00.88.71");
+        customerInDB = new Customer("Asterix", "TheGallic", "parToutatis@gallic.com",
+                new Address("Boarstreet", "5", new PostalCode("5000", "GallicVillage")),
+                "0471/00.88.71");
         customerRepository.saveCustomer(customerInDB);
 
 
