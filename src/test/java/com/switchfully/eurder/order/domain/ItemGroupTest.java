@@ -1,7 +1,5 @@
 package com.switchfully.eurder.order.domain;
 
-import com.switchfully.eurder.infrastructure.exception.NegativeNumberException;
-import com.switchfully.eurder.infrastructure.exception.NullItemException;
 import com.switchfully.eurder.item.domain.Item;
 import com.switchfully.eurder.item_group.domain.ItemGroup;
 import org.assertj.core.api.Assertions;
@@ -58,7 +56,7 @@ class ItemGroupTest {
 
         Item item = new Item("Bone", "A bone your dog can play with", 3, 1);
         //  THEN
-        Assertions.assertThatExceptionOfType(NegativeNumberException.class)
+        Assertions.assertThatExceptionOfType(Exception.class)
                 .isThrownBy(
                         () -> new ItemGroup(item, givenNegativeAmount)
                 );
@@ -70,7 +68,7 @@ class ItemGroupTest {
         int givenAmount = 5;
 
         //  THEN
-        Assertions.assertThatExceptionOfType(NullItemException.class)
+        Assertions.assertThatExceptionOfType(Exception.class)
                 .isThrownBy(
                         () -> new ItemGroup(null, givenAmount)
                 );

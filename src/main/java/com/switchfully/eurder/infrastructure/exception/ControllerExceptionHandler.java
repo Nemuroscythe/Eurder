@@ -1,60 +1,43 @@
 package com.switchfully.eurder.infrastructure.exception;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(IllegalEmailException.class)
-    protected void IllegalEmailException(IllegalEmailException ex,
-                                         HttpServletResponse response) throws IOException {
-        response.sendError(BAD_REQUEST.value(), ex.getMessage());
+    private final Logger controllerExceptionHandlerLogger = LoggerFactory.getLogger(ControllerExceptionHandler.class);
+
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+            MethodArgumentNotValidException ex, HttpHeaders headers,
+            HttpStatus status, WebRequest request) {
+
+        Map<String, List<String>> body = new HashMap<>();
+
+        List<String> errors = ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                .collect(Collectors.toList());
+
+        body.put("errors", errors);
+
+        errors.forEach(error -> controllerExceptionHandlerLogger.error(error));
+
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
-
-    @ExceptionHandler(NullNameException.class)
-    protected void NullNameException(NullNameException ex,
-                                     HttpServletResponse response) throws IOException {
-        response.sendError(BAD_REQUEST.value(), ex.getMessage());
-    }
-
-    @ExceptionHandler(NullAddressException.class)
-    protected void NullAddressException(NullAddressException ex,
-                                        HttpServletResponse response) throws IOException {
-        response.sendError(BAD_REQUEST.value(), ex.getMessage());
-    }
-
-    @ExceptionHandler(NullPhoneNumberException.class)
-    protected void NullPhoneNumberException(NullPhoneNumberException ex,
-                                            HttpServletResponse response) throws IOException {
-        response.sendError(BAD_REQUEST.value(), ex.getMessage());
-    }
-
-
-    @ExceptionHandler(NullDescriptionException.class)
-    protected void NullDescriptionException(NullDescriptionException ex,
-                                            HttpServletResponse response) throws IOException {
-        response.sendError(BAD_REQUEST.value(), ex.getMessage());
-    }
-
-
-    @ExceptionHandler(NegativeNumberException.class)
-    protected void NegativeNumberException(NegativeNumberException ex,
-                                           HttpServletResponse response) throws IOException {
-        response.sendError(BAD_REQUEST.value(), ex.getMessage());
-    }
-
-    @ExceptionHandler(NullItemException.class)
-    protected void NullItemException(NullItemException ex,
-                                     HttpServletResponse response) throws IOException {
-        response.sendError(BAD_REQUEST.value(), ex.getMessage());
-    }
-
-// other @ExceptionHandler annotated methods handling different exceptions in different ways.
 }
