@@ -13,7 +13,7 @@ import java.util.Objects;
 public class ItemGroup {
     public static final int DELIVERY_DELAY_WHEN_NOT_ENOUGH_STOCK = 7;
     public static final int DELIVERY_DELAY_WHEN_IN_STOCK = 1;
-    private Item item;
+    private Item itemSnapshot;
     private int amount;
     private LocalDate shippingDate;
     private static Logger ITEM_GROUP_LOGGER = LoggerFactory.getLogger(ItemGroup.class);
@@ -25,7 +25,7 @@ public class ItemGroup {
         }
         FieldValidation.numberPositiveCheck(amount, new NegativeNumberException(),
                 "The amount that you want to order cannot be negative", ITEM_GROUP_LOGGER);
-        this.item = new Item(item);
+        this.itemSnapshot = new Item(item);
         this.amount = amount;
         shippingDate = calculateShippingDate(item, amount);
     }
@@ -38,11 +38,11 @@ public class ItemGroup {
     }
 
     public double calculateItemGroupTotalPrice() {
-        return amount * item.getPrice();
+        return amount * itemSnapshot.getPrice();
     }
 
-    public Item getItem() {
-        return item;
+    public Item getItemSnapshot() {
+        return itemSnapshot;
     }
 
     public int getAmount() {
@@ -58,11 +58,11 @@ public class ItemGroup {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ItemGroup itemGroup = (ItemGroup) o;
-        return amount == itemGroup.amount && Objects.equals(item, itemGroup.item) && Objects.equals(shippingDate, itemGroup.shippingDate);
+        return amount == itemGroup.amount && Objects.equals(itemSnapshot, itemGroup.itemSnapshot) && Objects.equals(shippingDate, itemGroup.shippingDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(item, amount, shippingDate);
+        return Objects.hash(itemSnapshot, amount, shippingDate);
     }
 }

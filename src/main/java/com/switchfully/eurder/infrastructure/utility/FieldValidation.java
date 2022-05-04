@@ -16,8 +16,8 @@ public class FieldValidation {
             logger.error(errorMessage);
             throw exception;
         }
-    }
 
+    }
     public static void numberPositiveCheck(int numberToCheck, RuntimeException exception, String errorMessage, Logger logger) {
         if (numberToCheck < 0) {
             logger.error(errorMessage);
