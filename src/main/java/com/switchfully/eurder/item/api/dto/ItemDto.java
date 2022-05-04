@@ -1,11 +1,11 @@
 package com.switchfully.eurder.item.api.dto;
 
 public class ItemDto {
-    private String itemId;
-    private String name;
-    private String description;
-    private double price;
-    private int stockAmount;
+    private final String itemId;
+    private final String name;
+    private final String description;
+    private final double price;
+    private final int stockAmount;
 
     public ItemDto(String itemId, String name, String description, double price, int stockAmount) {
         this.itemId = itemId;

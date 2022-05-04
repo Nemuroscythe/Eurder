@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ItemService {
 
-    private Logger serviceLogger = LoggerFactory.getLogger(ItemService.class);
+    private final Logger serviceLogger = LoggerFactory.getLogger(ItemService.class);
     private final ItemMapper itemMapper;
     private final ItemRepository itemRepository;
 

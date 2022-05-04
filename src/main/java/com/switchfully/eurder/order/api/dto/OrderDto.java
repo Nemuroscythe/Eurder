@@ -5,10 +5,10 @@ import com.switchfully.eurder.order.domain.ItemGroup;
 import java.util.List;
 
 public class OrderDto {
-    private String orderId;
-    private String customerId;
-    private List<ItemGroup> itemGroupList;
-    private double totalPrice;
+    private final String orderId;
+    private final String customerId;
+    private final List<ItemGroup> itemGroupList;
+    private final double totalPrice;
 
     public OrderDto(String orderId, String customerId, List<ItemGroup> itemGroupList, double totalPrice) {
         this.orderId = orderId;

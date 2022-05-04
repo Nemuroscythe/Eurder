@@ -2,14 +2,12 @@ package com.switchfully.eurder.order.api.dto;
 
 import com.switchfully.eurder.order.domain.ItemGroup;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class CreateOrderDto {
 
-    private String customerId;
-    private List<ItemGroup> itemGroupList;
+    private final String customerId;
+    private final List<ItemGroup> itemGroupList;
 
     public CreateOrderDto(String customerId, List<ItemGroup> itemGroupList) {
         this.customerId = customerId;

@@ -71,7 +71,6 @@ class CustomerControllerTest {
     }
 
 
-
     @Test
     void givenCustomerWithFirstNameNull_WhenCreateCustomer_ThenBadRequest() {
         //  GIVEN

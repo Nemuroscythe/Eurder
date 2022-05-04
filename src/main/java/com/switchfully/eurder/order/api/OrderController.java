@@ -18,7 +18,7 @@ public class OrderController {
 
     @PostMapping(consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public OrderDto orderItems(@RequestBody CreateOrderDto createOrderDto){
+    public OrderDto orderItems(@RequestBody CreateOrderDto createOrderDto) {
         return serviceOrder.orderItems(createOrderDto);
     }
 }

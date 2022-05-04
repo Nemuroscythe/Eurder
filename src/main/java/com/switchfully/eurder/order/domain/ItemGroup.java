@@ -13,10 +13,10 @@ import java.util.Objects;
 public class ItemGroup {
     public static final int DELIVERY_DELAY_WHEN_NOT_ENOUGH_STOCK = 7;
     public static final int DELIVERY_DELAY_WHEN_IN_STOCK = 1;
-    private Item itemSnapshot;
-    private int amount;
-    private LocalDate shippingDate;
-    private static Logger ITEM_GROUP_LOGGER = LoggerFactory.getLogger(ItemGroup.class);
+    private final Item itemSnapshot;
+    private final int amount;
+    private final LocalDate shippingDate;
+    private static final Logger ITEM_GROUP_LOGGER = LoggerFactory.getLogger(ItemGroup.class);
 
     public ItemGroup(Item item, int amount) {
         if (item == null) {

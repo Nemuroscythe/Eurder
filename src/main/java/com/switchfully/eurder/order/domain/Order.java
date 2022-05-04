@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.UUID;
 
 public class Order {
-    private String orderId;
-    private String customerId;
-    private List<ItemGroup> itemGroupList;
-    private double totalPrice;
-    private static Logger ORDER_LOGGER = LoggerFactory.getLogger(Order.class);
+    private final String orderId;
+    private final String customerId;
+    private final List<ItemGroup> itemGroupList;
+    private final double totalPrice;
+    private static final Logger ORDER_LOGGER = LoggerFactory.getLogger(Order.class);
 
     public Order(String customerId, ItemGroup itemGroup) {
         this(customerId, new ArrayList<>(Arrays.asList(itemGroup)));

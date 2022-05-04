@@ -2,10 +2,10 @@ package com.switchfully.eurder.item.api.dto;
 
 public class CreateItemDto {
 
-    private String name;
-    private String description;
-    private double price;
-    private int stockAmount;
+    private final String name;
+    private final String description;
+    private final double price;
+    private final int stockAmount;
 
     public CreateItemDto(String name, String description, double price, int stockAmount) {
         this.name = name;

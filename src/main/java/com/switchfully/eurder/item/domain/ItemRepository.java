@@ -7,7 +7,7 @@ import java.util.Map;
 
 @Repository
 public class ItemRepository {
-    private Map<String, Item> itemsById = new HashMap<>();
+    private final Map<String, Item> itemsById = new HashMap<>();
 
     public void saveItem(Item item) {
         itemsById.put(item.getItemId(), item);

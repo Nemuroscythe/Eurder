@@ -4,7 +4,6 @@ import com.switchfully.eurder.item.api.dto.CreateItemDto;
 import com.switchfully.eurder.item.api.dto.ItemDto;
 import com.switchfully.eurder.item.domain.Item;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
 @Component
 public class ItemMapper {

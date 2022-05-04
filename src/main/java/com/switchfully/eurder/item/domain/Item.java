@@ -4,11 +4,11 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class Item {
-    private String itemId;
-    private String name;
-    private String description;
-    private double price;
-    private int stockAmount;
+    private final String itemId;
+    private final String name;
+    private final String description;
+    private final double price;
+    private final int stockAmount;
 
     public Item(Item originalItem) {
         this.itemId = originalItem.getItemId();
