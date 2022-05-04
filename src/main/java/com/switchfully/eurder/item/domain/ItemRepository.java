@@ -12,4 +12,8 @@ public class ItemRepository {
     public void saveItem(Item item) {
         itemsById.put(item.getItemId(), item);
     }
+
+    public Item findById(String itemId) {
+        return itemsById.get(itemId);
+    }
 }

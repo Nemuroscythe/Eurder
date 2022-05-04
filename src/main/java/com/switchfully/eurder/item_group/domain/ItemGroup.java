@@ -1,4 +1,4 @@
-package com.switchfully.eurder.order.domain;
+package com.switchfully.eurder.item_group.domain;
 
 import com.switchfully.eurder.infrastructure.exception.NegativeNumberException;
 import com.switchfully.eurder.infrastructure.exception.NullItemException;
@@ -16,6 +16,7 @@ public class ItemGroup {
     private final Item itemSnapshot;
     private final int amount;
     private final LocalDate shippingDate;
+    private final double groupPrice;
     private static final Logger ITEM_GROUP_LOGGER = LoggerFactory.getLogger(ItemGroup.class);
 
     public ItemGroup(Item item, int amount) {
@@ -27,6 +28,7 @@ public class ItemGroup {
                 "The amount that you want to order cannot be negative", ITEM_GROUP_LOGGER);
         this.itemSnapshot = new Item(item);
         this.amount = amount;
+        this.groupPrice = calculateItemGroupTotalPrice();
         shippingDate = calculateShippingDate(item, amount);
     }
 
@@ -47,6 +49,10 @@ public class ItemGroup {
 
     public int getAmount() {
         return amount;
+    }
+
+    public double getGroupPrice() {
+        return groupPrice;
     }
 
     public LocalDate getShippingDate() {

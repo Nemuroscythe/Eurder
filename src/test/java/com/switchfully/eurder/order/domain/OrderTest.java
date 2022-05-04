@@ -1,8 +1,11 @@
 package com.switchfully.eurder.order.domain;
 
 import com.switchfully.eurder.item.domain.Item;
+import com.switchfully.eurder.item_group.domain.ItemGroup;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 class OrderTest {
 
@@ -16,7 +19,7 @@ class OrderTest {
         //  THEN
         Assertions.assertThatExceptionOfType(NullPointerException.class)
                 .isThrownBy(() ->
-                        new Order(null, itemGroup));
+                        new Order(null, List.of(itemGroup)));
     }
 
 

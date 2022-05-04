@@ -3,6 +3,7 @@ package com.switchfully.eurder.order.domain;
 import com.switchfully.eurder.infrastructure.exception.NegativeNumberException;
 import com.switchfully.eurder.infrastructure.exception.NullItemException;
 import com.switchfully.eurder.item.domain.Item;
+import com.switchfully.eurder.item_group.domain.ItemGroup;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
