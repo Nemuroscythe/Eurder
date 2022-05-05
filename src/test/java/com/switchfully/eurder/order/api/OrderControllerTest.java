@@ -8,7 +8,6 @@ import com.switchfully.eurder.item.domain.ItemRepository;
 import com.switchfully.eurder.item_group.api.dto.CreateItemGroupDto;
 import com.switchfully.eurder.order.api.dto.CreateOrderDto;
 import com.switchfully.eurder.order.api.dto.OrderDto;
-import com.switchfully.eurder.order.service.OrderMapper;
 import com.switchfully.eurder.postal_code.domain.PostalCode;
 import io.restassured.RestAssured;
 import org.assertj.core.api.Assertions;
@@ -78,6 +77,46 @@ class OrderControllerTest {
         Assertions.assertThat(actualOrderDto.getItemGroupList()).hasSameSizeAs(expectedCreateOrderDto.getItemGroupList());
         Assertions.assertThat(actualOrderDto.getItemGroupList().get(0).getItemSnapshot().getItemId()).isEqualTo(expectedCreateOrderDto.getItemGroupList().get(0).getItemId());
         Assertions.assertThat(actualOrderDto.getItemGroupList().get(0).getAmount()).isEqualTo(expectedCreateOrderDto.getItemGroupList().get(0).getAmount());
+    }
+
+    @Test
+    void givenItemGroupWithNotExistingItemId_WhenOrderItems_ThenBadRequest() {
+        //  GIVEN
+        CreateItemGroupDto expectedCreateItemGroupDto = new CreateItemGroupDto("I don't exist", 1);
+        CreateOrderDto expectedCreateOrderDto = new CreateOrderDto(customerInDB.getCustomerId(), List.of(expectedCreateItemGroupDto));
+        double expectedPrice = itemInDB.getPrice() * expectedCreateItemGroupDto.getAmount();
+        //  WHEN
+        RestAssured
+                .given()
+                .port(port)
+                .body(expectedCreateOrderDto)
+                .contentType(JSON)
+                .when()
+                .accept(JSON)
+                .post("/orders")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void givenItemGroupWithInvalidFields_WhenOrderItems_ThenBadRequest() {
+        //  GIVEN
+        CreateItemGroupDto expectedCreateItemGroupDto = new CreateItemGroupDto(itemInDB.getItemId(), -5);
+        CreateOrderDto expectedCreateOrderDto = new CreateOrderDto(customerInDB.getCustomerId(), List.of(expectedCreateItemGroupDto));
+        double expectedPrice = itemInDB.getPrice() * expectedCreateItemGroupDto.getAmount();
+        //  WHEN
+        RestAssured
+                .given()
+                .port(port)
+                .body(expectedCreateOrderDto)
+                .contentType(JSON)
+                .when()
+                .accept(JSON)
+                .post("/orders")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
     }
 
 }

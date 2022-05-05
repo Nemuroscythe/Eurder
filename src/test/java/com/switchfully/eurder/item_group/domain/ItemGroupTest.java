@@ -1,4 +1,4 @@
-package com.switchfully.eurder.order.domain;
+package com.switchfully.eurder.item_group.domain;
 
 import com.switchfully.eurder.item.domain.Item;
 import com.switchfully.eurder.item_group.domain.ItemGroup;
@@ -18,7 +18,7 @@ class ItemGroupTest {
         Item item = new Item("Bone", "A bone your dog can play with", givenPrice, 10);
         ItemGroup itemGroup = new ItemGroup(item, givenAmount);
         //  WHEN
-        double actualTotalPrice = itemGroup.calculateItemGroupTotalPrice();
+        double actualTotalPrice = itemGroup.getGroupPrice();
         //  THEN
         Assertions.assertThat(actualTotalPrice).isEqualTo(expectedTotalPrice);
     }
@@ -49,28 +49,4 @@ class ItemGroupTest {
         Assertions.assertThat(actualShippingDate).isEqualTo(expectedShippingDate);
     }
 
-    @Test
-    void givenNegativeAmount_WhenCreatingAnItemGroup_ThenNegativeNumberException() {
-        //  GIVEN
-        int givenNegativeAmount = -5;
-
-        Item item = new Item("Bone", "A bone your dog can play with", 3, 1);
-        //  THEN
-        Assertions.assertThatExceptionOfType(Exception.class)
-                .isThrownBy(
-                        () -> new ItemGroup(item, givenNegativeAmount)
-                );
-    }
-
-    @Test
-    void givenItemNull_WhenCreatingAnItemGroup_ThenNullItemException() {
-        //  GIVEN
-        int givenAmount = 5;
-
-        //  THEN
-        Assertions.assertThatExceptionOfType(Exception.class)
-                .isThrownBy(
-                        () -> new ItemGroup(null, givenAmount)
-                );
-    }
 }

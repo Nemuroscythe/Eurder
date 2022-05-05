@@ -8,13 +8,15 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class ItemGroup {
+
+    private static final Logger ITEM_GROUP_LOGGER = LoggerFactory.getLogger(ItemGroup.class);
     public static final int DELIVERY_DELAY_WHEN_NOT_ENOUGH_STOCK = 7;
     public static final int DELIVERY_DELAY_WHEN_IN_STOCK = 1;
+
     private final Item itemSnapshot;
     private final int amount;
     private final LocalDate shippingDate;
     private final double groupPrice;
-    private static final Logger ITEM_GROUP_LOGGER = LoggerFactory.getLogger(ItemGroup.class);
 
     public ItemGroup(Item item, int amount) {
         this.itemSnapshot = new Item(item);
@@ -30,7 +32,7 @@ public class ItemGroup {
         return LocalDate.now().plusDays(DELIVERY_DELAY_WHEN_IN_STOCK);
     }
 
-    public double calculateItemGroupTotalPrice() {
+    private double calculateItemGroupTotalPrice() {
         return amount * itemSnapshot.getPrice();
     }
 

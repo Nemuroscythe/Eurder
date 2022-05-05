@@ -29,7 +29,7 @@ public class Order {
 
     private double calculateTotalPrice(List<ItemGroup> itemGroupList) {
         return itemGroupList.stream()
-                .map(ItemGroup::calculateItemGroupTotalPrice)
+                .map(ItemGroup::getGroupPrice)
                 .reduce(0.0, Double::sum);
     }
 
