@@ -34,7 +34,7 @@ class ItemGroupTest {
         //  WHEN
         OffsetDateTime actualShippingDate = itemGroup.getShippingDate();
         //  THEN
-        Assertions.assertThat(actualShippingDate).isEqualTo(expectedShippingDate);
+        Assertions.assertThat(actualShippingDate.toEpochSecond()).isEqualTo(expectedShippingDate.toEpochSecond());
     }
 
     @Test
