@@ -12,6 +12,8 @@ import com.switchfully.eurder.postal_code.domain.PostalCode;
 import io.restassured.RestAssured;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -28,9 +30,9 @@ import static io.restassured.http.ContentType.JSON;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @AutoConfigureTestDatabase
 class OrderControllerTest {
-
     @LocalServerPort
     private int port;
+
     @Autowired
     private CustomerRepository customerRepository;
     @Autowired
@@ -51,72 +53,119 @@ class OrderControllerTest {
         itemRepository.saveItem(itemInDB);
     }
 
-    @Test
-    void givenOneItemGroupAndACustomerID_WhenOrderItems_ThenReturnOrderDtoContainingTheOnlyOrderedItemGroup() {
-        //  GIVEN
-        CreateItemGroupDto expectedCreateItemGroupDto = new CreateItemGroupDto(itemInDB.getItemId(), 1);
-        CreateOrderDto expectedCreateOrderDto = new CreateOrderDto(customerInDB.getCustomerId(), List.of(expectedCreateItemGroupDto));
-        double expectedPrice = itemInDB.getPrice() * expectedCreateItemGroupDto.getAmount();
-        //  WHEN
-        OrderDto actualOrderDto = RestAssured
-                .given()
-                .port(port)
-                .body(expectedCreateOrderDto)
-                .contentType(JSON)
-                .when()
-                .accept(JSON)
-                .post("/orders")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.CREATED.value())
-                .extract().as(OrderDto.class);
-        //  THEN
-        Assertions.assertThat(actualOrderDto.getOrderId()).isNotBlank();
-        Assertions.assertThat(actualOrderDto.getCustomerId()).isEqualTo(expectedCreateOrderDto.getCustomerId());
-        Assertions.assertThat(actualOrderDto.getTotalPrice()).isEqualTo(expectedPrice);
-        Assertions.assertThat(actualOrderDto.getItemGroupList()).hasSameSizeAs(expectedCreateOrderDto.getItemGroupList());
-        Assertions.assertThat(actualOrderDto.getItemGroupList().get(0).getItemSnapshot().getItemId()).isEqualTo(expectedCreateOrderDto.getItemGroupList().get(0).getItemId());
-        Assertions.assertThat(actualOrderDto.getItemGroupList().get(0).getAmount()).isEqualTo(expectedCreateOrderDto.getItemGroupList().get(0).getAmount());
+    @Nested
+    @DisplayName("Order integration tests")
+    class OrderIntegrationTest {
+
+        @Test
+        void givenItemGroupListAndACustomerID_WhenOrderItems_ThenReturnOrderDtoContainingTheOnlyOrderedItemGroup() {
+            //  GIVEN
+            CreateItemGroupDto expectedCreateItemGroupDto = new CreateItemGroupDto(itemInDB.getItemId(), 1);
+            CreateOrderDto expectedCreateOrderDto = new CreateOrderDto(customerInDB.getCustomerId(), List.of(expectedCreateItemGroupDto));
+            double expectedPrice = itemInDB.getPrice() * expectedCreateItemGroupDto.getAmount();
+            //  WHEN
+            OrderDto actualOrderDto = RestAssured
+                    .given()
+                    .port(port)
+                    .body(expectedCreateOrderDto)
+                    .contentType(JSON)
+                    .when()
+                    .accept(JSON)
+                    .post("/orders")
+                    .then()
+                    .assertThat()
+                    .statusCode(HttpStatus.CREATED.value())
+                    .extract().as(OrderDto.class);
+            //  THEN
+            Assertions.assertThat(actualOrderDto.getOrderId()).isNotBlank();
+            Assertions.assertThat(actualOrderDto.getCustomerId()).isEqualTo(expectedCreateOrderDto.getCustomerId());
+            Assertions.assertThat(actualOrderDto.getTotalPrice()).isEqualTo(expectedPrice);
+            Assertions.assertThat(actualOrderDto.getItemGroupList()).hasSameSizeAs(expectedCreateOrderDto.getItemGroupList());
+            Assertions.assertThat(actualOrderDto.getItemGroupList().get(0).getItemSnapshot().getItemId()).isEqualTo(expectedCreateOrderDto.getItemGroupList().get(0).getItemId());
+            Assertions.assertThat(actualOrderDto.getItemGroupList().get(0).getAmount()).isEqualTo(expectedCreateOrderDto.getItemGroupList().get(0).getAmount());
+        }
+
+        @Test
+        void givenOrderWithInvalidFields_WhenOrderItems_ThenBadRequest() {
+            //  GIVEN
+            CreateItemGroupDto expectedCreateItemGroupDto = new CreateItemGroupDto(itemInDB.getItemId(), 5);
+            CreateOrderDto expectedCreateOrderDto = new CreateOrderDto(" ", List.of(expectedCreateItemGroupDto));
+            //  WHEN
+            RestAssured
+                    .given()
+                    .port(port)
+                    .body(expectedCreateOrderDto)
+                    .contentType(JSON)
+                    .when()
+                    .accept(JSON)
+                    .post("/orders")
+                    .then()
+                    .assertThat()
+                    .statusCode(HttpStatus.BAD_REQUEST.value());
+        }
+
+        @Test
+        void givenOrderWithNotExistingCustomerId_WhenOrderItems_ThenBadRequest() {
+            //  GIVEN
+            CreateItemGroupDto expectedCreateItemGroupDto = new CreateItemGroupDto(itemInDB.getItemId(), 5);
+            CreateOrderDto expectedCreateOrderDto = new CreateOrderDto("I don't exist", List.of(expectedCreateItemGroupDto));
+            //  WHEN
+            RestAssured
+                    .given()
+                    .port(port)
+                    .body(expectedCreateOrderDto)
+                    .contentType(JSON)
+                    .when()
+                    .accept(JSON)
+                    .post("/orders")
+                    .then()
+                    .assertThat()
+                    .statusCode(HttpStatus.BAD_REQUEST.value());
+        }
     }
 
-    @Test
-    void givenItemGroupWithNotExistingItemId_WhenOrderItems_ThenBadRequest() {
-        //  GIVEN
-        CreateItemGroupDto expectedCreateItemGroupDto = new CreateItemGroupDto("I don't exist", 1);
-        CreateOrderDto expectedCreateOrderDto = new CreateOrderDto(customerInDB.getCustomerId(), List.of(expectedCreateItemGroupDto));
-        double expectedPrice = itemInDB.getPrice() * expectedCreateItemGroupDto.getAmount();
-        //  WHEN
-        RestAssured
-                .given()
-                .port(port)
-                .body(expectedCreateOrderDto)
-                .contentType(JSON)
-                .when()
-                .accept(JSON)
-                .post("/orders")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.BAD_REQUEST.value());
-    }
+    @Nested
+    @DisplayName("Item group integration tests")
+    class ItemGroupIntegrationTest {
 
-    @Test
-    void givenItemGroupWithInvalidFields_WhenOrderItems_ThenBadRequest() {
-        //  GIVEN
-        CreateItemGroupDto expectedCreateItemGroupDto = new CreateItemGroupDto(itemInDB.getItemId(), -5);
-        CreateOrderDto expectedCreateOrderDto = new CreateOrderDto(customerInDB.getCustomerId(), List.of(expectedCreateItemGroupDto));
-        double expectedPrice = itemInDB.getPrice() * expectedCreateItemGroupDto.getAmount();
-        //  WHEN
-        RestAssured
-                .given()
-                .port(port)
-                .body(expectedCreateOrderDto)
-                .contentType(JSON)
-                .when()
-                .accept(JSON)
-                .post("/orders")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.BAD_REQUEST.value());
+        @Test
+        void givenItemGroupWithNotExistingItemId_WhenOrderItems_ThenBadRequest() {
+            //  GIVEN
+            CreateItemGroupDto expectedCreateItemGroupDto = new CreateItemGroupDto("I don't exist", 1);
+            CreateOrderDto expectedCreateOrderDto = new CreateOrderDto(customerInDB.getCustomerId(), List.of(expectedCreateItemGroupDto));
+            //  WHEN
+            RestAssured
+                    .given()
+                    .port(port)
+                    .body(expectedCreateOrderDto)
+                    .contentType(JSON)
+                    .when()
+                    .accept(JSON)
+                    .post("/orders")
+                    .then()
+                    .assertThat()
+                    .statusCode(HttpStatus.BAD_REQUEST.value());
+        }
+
+        @Test
+        void givenItemGroupWithInvalidFields_WhenOrderItems_ThenBadRequest() {
+            //  GIVEN
+            CreateItemGroupDto expectedCreateItemGroupDto = new CreateItemGroupDto(itemInDB.getItemId(), -5);
+            CreateOrderDto expectedCreateOrderDto = new CreateOrderDto(customerInDB.getCustomerId(), List.of(expectedCreateItemGroupDto));
+            //  WHEN
+            RestAssured
+                    .given()
+                    .port(port)
+                    .body(expectedCreateOrderDto)
+                    .contentType(JSON)
+                    .when()
+                    .accept(JSON)
+                    .post("/orders")
+                    .then()
+                    .assertThat()
+                    .statusCode(HttpStatus.BAD_REQUEST.value());
+        }
+
     }
 
 }
