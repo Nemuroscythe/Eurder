@@ -2,16 +2,18 @@ package com.switchfully.eurder.customer.api.dto;
 
 import com.switchfully.eurder.address.api.dto.AddressDto;
 
+import java.util.UUID;
+
 public class CustomerDto {
 
-    private final String customerId;
+    private final UUID customerId;
     private final String firstName;
     private final String lastName;
     private final String emailAddress;
     private final AddressDto address;
     private final String phoneNumber;
 
-    public CustomerDto(String customerId, String firstName, String lastName, String emailAddress, AddressDto address, String phoneNumber) {
+    public CustomerDto(UUID customerId, String firstName, String lastName, String emailAddress, AddressDto address, String phoneNumber) {
         this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -20,7 +22,7 @@ public class CustomerDto {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getCustomerId() {
+    public UUID getCustomerId() {
         return customerId;
     }
 

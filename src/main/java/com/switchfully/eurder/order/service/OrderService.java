@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.UUID;
+
 @Service
 public class OrderService {
     private final OrderMapper orderMapper;
@@ -28,8 +30,8 @@ public class OrderService {
         return orderMapper.toDto(order);
     }
 
-    private void customerIdExist(String customerId) {
-        if (!customerRepository.exist(customerId)) {
+    private void customerIdExist(UUID customerId) {
+        if (!customerRepository.existsById(customerId)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
     }

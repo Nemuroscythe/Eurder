@@ -10,18 +10,18 @@ import java.util.UUID;
 public class Order {
     private static final Logger ORDER_LOGGER = LoggerFactory.getLogger(Order.class);
 
-    private final String orderId;
-    private final String customerId;
+    private final UUID orderId;
+    private final UUID customerId;
     private final List<ItemGroup> itemGroupList;
     private final double totalPrice;
 
-    public Order(String customerId, List<ItemGroup> itemGroupList) {
+    public Order(UUID customerId, List<ItemGroup> itemGroupList) {
         if (customerId == null) {
             ORDER_LOGGER.error("CustomerId is null");
             throw new NullPointerException("Provide a customer id");
         }
 
-        this.orderId = UUID.randomUUID().toString();
+        this.orderId = UUID.randomUUID();
         this.customerId = customerId;
         this.itemGroupList = itemGroupList;
         this.totalPrice = calculateTotalPrice(itemGroupList);
@@ -33,11 +33,11 @@ public class Order {
                 .reduce(0.0, Double::sum);
     }
 
-    public String getOrderId() {
+    public UUID getOrderId() {
         return orderId;
     }
 
-    public String getCustomerId() {
+    public UUID getCustomerId() {
         return customerId;
     }
 

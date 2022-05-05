@@ -16,12 +16,13 @@ import javax.validation.ValidatorFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 class CreateOrderDtoTest {
 
     private Validator validator;
     private List<CreateItemGroupDto> createItemGroupDtoList;
-    private String customerId;
+    private UUID customerId;
 
     @BeforeEach
     void setUp() {
@@ -43,15 +44,6 @@ class CreateOrderDtoTest {
     void givenNULLCustomerId_ThenViolationConstraintNotEmpty() {
         //GIVEN
         CreateOrderDto createOrderDto = new CreateOrderDto(null, createItemGroupDtoList);
-        Set<ConstraintViolation<CreateOrderDto>> violations = validator.validate(createOrderDto);
-        //THEN
-        Assertions.assertThat(violations.isEmpty()).isFalse();
-    }
-
-    @Test
-    void givenBlankCustomerId_ThenViolationConstraintNotEmpty() {
-        //GIVEN
-        CreateOrderDto createOrderDto = new CreateOrderDto(" ", createItemGroupDtoList);
         Set<ConstraintViolation<CreateOrderDto>> violations = validator.validate(createOrderDto);
         //THEN
         Assertions.assertThat(violations.isEmpty()).isFalse();

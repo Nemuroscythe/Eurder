@@ -1,21 +1,31 @@
 package com.switchfully.eurder.customer.domain;
 
-
 import com.switchfully.eurder.address.domain.Address;
 
+import javax.persistence.*;
 import java.util.UUID;
 
+@Entity
+@Table(name = "customer")
 public class Customer {
 
-    private final String customerId;
-    private final String firstName;
-    private final String lastName;
-    private final String emailAddress;
-    private final Address address;
-    private final String phoneNumber;
+    @Id
+    @Column(name = "id")
+    @GeneratedValue
+    private UUID customerId;
+    @Column(name = "first_name")
+    private String firstName;
+    @Column(name = "last_name")
+    private String lastName;
+    @Column(name = "email")
+    private String emailAddress;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_address_id")
+    private Address address;
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
     public Customer(String firstName, String lastName, String emailAddress, Address address, String phoneNumber) {
-        this.customerId = UUID.randomUUID().toString();
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;
@@ -23,7 +33,10 @@ public class Customer {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getCustomerId() {
+    public Customer() {
+    }
+
+    public UUID getCustomerId() {
         return customerId;
     }
 

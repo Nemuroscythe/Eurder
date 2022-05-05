@@ -1,15 +1,15 @@
 package com.switchfully.eurder.postal_code.domain;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "POSTAL_CODE")
 public class PostalCode {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "postal_code_seq")
-    @SequenceGenerator(name = "postal_code_seq", sequenceName = "postal_code_seq", allocationSize = 1)
-    private Long id;
+    @GeneratedValue
+    private UUID id;
 
     @Column(name = "POSTAL_CODE_NUMBER")
     private String postalCodeNumber;
@@ -25,7 +25,7 @@ public class PostalCode {
         this.city = city;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 

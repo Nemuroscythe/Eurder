@@ -23,6 +23,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.List;
+import java.util.UUID;
 
 import static io.restassured.http.ContentType.JSON;
 
@@ -46,7 +47,7 @@ class OrderControllerTest {
         customerInDB = new Customer("Asterix", "TheGallic", "parToutatis@gallic.com",
                 new Address("Boarstreet", "5", new PostalCode("5000", "GallicVillage")),
                 "0471/00.88.71");
-        customerRepository.saveCustomer(customerInDB);
+        customerRepository.save(customerInDB);
 
 
         itemInDB = new Item("Magic potion", "The famous potion brewed by Panoramix", 1000, 1);
@@ -77,19 +78,20 @@ class OrderControllerTest {
                     .statusCode(HttpStatus.CREATED.value())
                     .extract().as(OrderDto.class);
             //  THEN
-            Assertions.assertThat(actualOrderDto.getOrderId()).isNotBlank();
             Assertions.assertThat(actualOrderDto.getCustomerId()).isEqualTo(expectedCreateOrderDto.getCustomerId());
             Assertions.assertThat(actualOrderDto.getTotalPrice()).isEqualTo(expectedPrice);
             Assertions.assertThat(actualOrderDto.getItemGroupList()).hasSameSizeAs(expectedCreateOrderDto.getItemGroupList());
             Assertions.assertThat(actualOrderDto.getItemGroupList().get(0).getItemSnapshot().getItemId()).isEqualTo(expectedCreateOrderDto.getItemGroupList().get(0).getItemId());
             Assertions.assertThat(actualOrderDto.getItemGroupList().get(0).getAmount()).isEqualTo(expectedCreateOrderDto.getItemGroupList().get(0).getAmount());
+
+            Assertions.assertThat(customerRepository.existsById(actualOrderDto.getCustomerId())).isTrue();
         }
 
         @Test
         void givenOrderWithInvalidFields_WhenOrderItems_ThenBadRequest() {
             //  GIVEN
             CreateItemGroupDto expectedCreateItemGroupDto = new CreateItemGroupDto(itemInDB.getItemId(), 5);
-            CreateOrderDto expectedCreateOrderDto = new CreateOrderDto(" ", List.of(expectedCreateItemGroupDto));
+            CreateOrderDto expectedCreateOrderDto = new CreateOrderDto(customerInDB.getCustomerId(), null);
             //  WHEN
             RestAssured
                     .given()
@@ -108,7 +110,8 @@ class OrderControllerTest {
         void givenOrderWithNotExistingCustomerId_WhenOrderItems_ThenBadRequest() {
             //  GIVEN
             CreateItemGroupDto expectedCreateItemGroupDto = new CreateItemGroupDto(itemInDB.getItemId(), 5);
-            CreateOrderDto expectedCreateOrderDto = new CreateOrderDto("I don't exist", List.of(expectedCreateItemGroupDto));
+            CreateOrderDto expectedCreateOrderDto = new CreateOrderDto(UUID.fromString("123e4567-e89b-12d3-a456-426614174000"),
+                    List.of(expectedCreateItemGroupDto));
             //  WHEN
             RestAssured
                     .given()

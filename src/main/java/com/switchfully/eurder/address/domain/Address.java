@@ -1,18 +1,19 @@
 package com.switchfully.eurder.address.domain;
 
 import com.switchfully.eurder.postal_code.domain.PostalCode;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "ADDRESS")
 public class Address {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "address_seq")
-    @SequenceGenerator(name = "address_seq", sequenceName = "address_seq", allocationSize = 1)
-    private Long id;
+    @GeneratedValue
+    private UUID id;
 
     @Column(name = "STREET_NAME")
     private String streetName;
@@ -33,7 +34,7 @@ public class Address {
         this.postalCode = postalCode;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 

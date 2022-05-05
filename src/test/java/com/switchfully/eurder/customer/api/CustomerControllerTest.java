@@ -45,7 +45,6 @@ class CustomerControllerTest {
                 .statusCode(HttpStatus.CREATED.value())
                 .extract().as(CustomerDto.class);
         //  THEN
-        Assertions.assertThat(actualCustomerDto.getCustomerId()).isNotBlank();
         Assertions.assertThat(actualCustomerDto.getFirstName()).isEqualTo(expectedCreateCustomerDto.getFirstName());
         Assertions.assertThat(actualCustomerDto.getLastName()).isEqualTo(expectedCreateCustomerDto.getLastName());
         Assertions.assertThat(actualCustomerDto.getEmailAddress()).isEqualTo(expectedCreateCustomerDto.getEmailAddress());

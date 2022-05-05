@@ -1,4 +1,4 @@
-package com.switchfully.eurder.customer.domain;
+package com.switchfully.eurder.address.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -6,6 +6,5 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface CustomerRepository extends JpaRepository<Customer, UUID> {
-
+public interface AddressRepository extends JpaRepository<Address, UUID> {
 }
