@@ -34,6 +34,7 @@ public class ItemGroupMapper {
 
     public ItemGroupDto toDto(ItemGroup itemGroup) {
         return new ItemGroupDto(
+                itemGroup.getId(),
                 itemGroup.getItemSnapshot(),
                 itemGroup.getAmount(),
                 itemGroup.getShippingDate(),

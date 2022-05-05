@@ -3,31 +3,42 @@ package com.switchfully.eurder.item_group.api.dto;
 import com.switchfully.eurder.item.domain.Item;
 
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.Objects;
+import java.util.UUID;
 
 public class ItemGroupDto {
+    private final UUID id;
     private final Item itemSnapshot;
-    private final int amount;
-    private final LocalDate shippingDate;
+    private final long amount;
+    private final OffsetDateTime shippingDate;
     private final double groupPrice;
 
-    public ItemGroupDto(Item itemSnapshot, int amount, LocalDate shippingDate, double groupPrice) {
+    public ItemGroupDto(UUID id, Item itemSnapshot, long amount, OffsetDateTime shippingDate, double groupPrice) {
+        this.id = id;
         this.itemSnapshot = itemSnapshot;
         this.amount = amount;
         this.shippingDate = shippingDate;
         this.groupPrice = groupPrice;
     }
 
+    public UUID getId() {
+        return id;
+    }
     public Item getItemSnapshot() {
         return itemSnapshot;
     }
 
-    public int getAmount() {
+    public long getAmount() {
         return amount;
     }
 
-    public LocalDate getShippingDate() {
+    public OffsetDateTime getShippingDate() {
         return shippingDate;
+    }
+
+    public double getGroupPrice() {
+        return groupPrice;
     }
 
     @Override

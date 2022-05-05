@@ -9,9 +9,9 @@ public class CreateItemGroupDto {
     @NotNull(message = "itemId is null")
     private final UUID itemId;
     @Positive(message = "message is negative or zero")
-    private final int amount;
+    private final long amount;
 
-    public CreateItemGroupDto(UUID itemId, int amount) {
+    public CreateItemGroupDto(UUID itemId, long amount) {
         this.itemId = itemId;
         this.amount = amount;
     }
@@ -20,7 +20,7 @@ public class CreateItemGroupDto {
         return itemId;
     }
 
-    public int getAmount() {
+    public long getAmount() {
         return amount;
     }
 }

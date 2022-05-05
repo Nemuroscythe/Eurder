@@ -1,30 +1,39 @@
 package com.switchfully.eurder.order.domain;
 
+import com.switchfully.eurder.customer.domain.Customer;
 import com.switchfully.eurder.item_group.domain.ItemGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
+@Entity
+@Table(name = "order")
 public class Order {
     private static final Logger ORDER_LOGGER = LoggerFactory.getLogger(Order.class);
 
-    private final UUID orderId;
-    private final UUID customerId;
-    private final List<ItemGroup> itemGroupList;
-    private final double totalPrice;
+    @Id
+    @GeneratedValue
+    private UUID orderId;
+    @OneToOne
+    @JoinColumn(name = "fk_customer_id")
+    private Customer customer;
+    @OneToMany
+    @JoinColumn(name = "fk_order_id")
+    private List<ItemGroup> itemGroupList;
+    @Column(name = "total_price")
+    private double totalPrice;
 
-    public Order(UUID customerId, List<ItemGroup> itemGroupList) {
-        if (customerId == null) {
-            ORDER_LOGGER.error("CustomerId is null");
-            throw new NullPointerException("Provide a customer id");
-        }
-
+    public Order(Customer customer, List<ItemGroup> itemGroupList) {
         this.orderId = UUID.randomUUID();
-        this.customerId = customerId;
+        this.customer = customer;
         this.itemGroupList = itemGroupList;
         this.totalPrice = calculateTotalPrice(itemGroupList);
+    }
+
+    public Order() {
     }
 
     private double calculateTotalPrice(List<ItemGroup> itemGroupList) {
@@ -38,7 +47,7 @@ public class Order {
     }
 
     public UUID getCustomerId() {
-        return customerId;
+        return customer.getCustomerId();
     }
 
     public List<ItemGroup> getItemGroupList() {

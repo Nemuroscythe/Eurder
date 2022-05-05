@@ -6,6 +6,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 
 class ItemGroupTest {
 
@@ -27,11 +28,11 @@ class ItemGroupTest {
     void givenItemGroupWithEnoughStock_WhenCalculateShippingDate_ThenReturnTodayPlusOne() {
         //  GIVEN
         int givenAmount = 5;
-        LocalDate expectedShippingDate = LocalDate.now().plusDays(1);
+        OffsetDateTime expectedShippingDate = OffsetDateTime.now().plusDays(1);
         Item item = new Item("Bone", "A bone your dog can play with", 3, 10);
         ItemGroup itemGroup = new ItemGroup(item, givenAmount);
         //  WHEN
-        LocalDate actualShippingDate = itemGroup.getShippingDate();
+        OffsetDateTime actualShippingDate = itemGroup.getShippingDate();
         //  THEN
         Assertions.assertThat(actualShippingDate).isEqualTo(expectedShippingDate);
     }
@@ -40,13 +41,13 @@ class ItemGroupTest {
     void givenItemGroupWithNotEnoughStock_WhenCalculateShippingDate_ThenReturnTodayPlusSeven() {
         //  GIVEN
         int givenAmount = 5;
-        LocalDate expectedShippingDate = LocalDate.now().plusDays(7);
+        OffsetDateTime expectedShippingDate = OffsetDateTime.now().plusDays(7);
         Item item = new Item("Bone", "A bone your dog can play with", 3, 1);
         ItemGroup itemGroup = new ItemGroup(item, givenAmount);
         //  WHEN
-        LocalDate actualShippingDate = itemGroup.getShippingDate();
+        OffsetDateTime actualShippingDate = itemGroup.getShippingDate();
         //  THEN
-        Assertions.assertThat(actualShippingDate).isEqualTo(expectedShippingDate);
+        Assertions.assertThat(actualShippingDate.toEpochSecond()).isEqualTo(expectedShippingDate.toEpochSecond());
     }
 
 }

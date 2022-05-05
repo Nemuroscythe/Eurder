@@ -4,43 +4,63 @@ import com.switchfully.eurder.item.domain.Item;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.Objects;
+import java.util.UUID;
 
+@Entity
+@Table(name = "item_group")
 public class ItemGroup {
 
     private static final Logger ITEM_GROUP_LOGGER = LoggerFactory.getLogger(ItemGroup.class);
     public static final int DELIVERY_DELAY_WHEN_NOT_ENOUGH_STOCK = 7;
     public static final int DELIVERY_DELAY_WHEN_IN_STOCK = 1;
 
-    private final Item itemSnapshot;
-    private final int amount;
-    private final LocalDate shippingDate;
-    private final double groupPrice;
+    @Id
+    @GeneratedValue
+    private UUID id;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_item_id")
+    private Item itemSnapshot;
+    @Column(name = "amount")
+    private long amount;
+    @Column(name = "shipping_date", columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    private OffsetDateTime shippingDate;
+    @Column(name = "group_price")
+    private double groupPrice;
 
-    public ItemGroup(Item item, int amount) {
+    public ItemGroup(Item item, long amount) {
         this.itemSnapshot = new Item(item);
         this.amount = amount;
         this.groupPrice = calculateItemGroupTotalPrice();
         shippingDate = calculateShippingDate(item, amount);
     }
 
-    private LocalDate calculateShippingDate(Item item, int amount) {
+    public ItemGroup() {
+    }
+
+    private OffsetDateTime calculateShippingDate(Item item, long amount) {
         if (amount > item.getStockAmount()) {
-            return LocalDate.now().plusDays(DELIVERY_DELAY_WHEN_NOT_ENOUGH_STOCK);
+            return OffsetDateTime.now().plusDays(DELIVERY_DELAY_WHEN_NOT_ENOUGH_STOCK);
         }
-        return LocalDate.now().plusDays(DELIVERY_DELAY_WHEN_IN_STOCK);
+        return OffsetDateTime.now().plusDays(DELIVERY_DELAY_WHEN_IN_STOCK);
     }
 
     private double calculateItemGroupTotalPrice() {
         return amount * itemSnapshot.getPrice();
     }
 
+    public UUID getId() {
+        return id;
+    }
+
     public Item getItemSnapshot() {
         return itemSnapshot;
     }
 
-    public int getAmount() {
+    public long getAmount() {
         return amount;
     }
 
@@ -48,7 +68,7 @@ public class ItemGroup {
         return groupPrice;
     }
 
-    public LocalDate getShippingDate() {
+    public OffsetDateTime getShippingDate() {
         return shippingDate;
     }
 

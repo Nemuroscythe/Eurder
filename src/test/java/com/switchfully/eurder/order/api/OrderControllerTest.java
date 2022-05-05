@@ -167,7 +167,5 @@ class OrderControllerTest {
                     .assertThat()
                     .statusCode(HttpStatus.BAD_REQUEST.value());
         }
-
     }
-
 }
