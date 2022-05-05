@@ -31,4 +31,30 @@ class CreatePostalCodeDtoTest {
         Assertions.assertThat(violations.isEmpty()).isFalse();
     }
 
+    @Test
+    void givenBlankPostalCodeNumber_ThenViolationConstraintNotEmpty() {
+        //GIVEN
+        CreatePostalCodeDto createPostalCodeDto = new CreatePostalCodeDto("   ", "Gallic village");
+        Set<ConstraintViolation<CreatePostalCodeDto>> violations = validator.validate(createPostalCodeDto);
+        //THEN
+        Assertions.assertThat(violations.isEmpty()).isFalse();
+    }
+    @Test
+    void givenNULLCity_ThenViolationConstraintNotEmpty() {
+        //GIVEN
+        CreatePostalCodeDto createPostalCodeDto = new CreatePostalCodeDto("5000", null);
+        Set<ConstraintViolation<CreatePostalCodeDto>> violations = validator.validate(createPostalCodeDto);
+        //THEN
+        Assertions.assertThat(violations.isEmpty()).isFalse();
+    }
+
+    @Test
+    void givenBlankCity_ThenViolationConstraintNotEmpty() {
+        //GIVEN
+        CreatePostalCodeDto createPostalCodeDto = new CreatePostalCodeDto("5000", "  ");
+        Set<ConstraintViolation<CreatePostalCodeDto>> violations = validator.validate(createPostalCodeDto);
+        //THEN
+        Assertions.assertThat(violations.isEmpty()).isFalse();
+    }
+
 }
