@@ -6,6 +6,8 @@ import com.switchfully.eurder.customer.service.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(path = "/customers")
 public class CustomerController {
@@ -18,7 +20,7 @@ public class CustomerController {
 
     @PostMapping(consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public CustomerDto createCustomer(@RequestBody CreateCustomerDto createCustomerDto) {
+    public CustomerDto createCustomer(@Valid @RequestBody CreateCustomerDto createCustomerDto) {
         return customerService.createCustomer(createCustomerDto);
     }
 }

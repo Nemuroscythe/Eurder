@@ -24,8 +24,6 @@ class CustomerControllerTest {
 
     @LocalServerPort
     private int port;
-    @Autowired
-    private CustomerMapper customerMapper;
 
     @Test
     void givenCustomer_WhenCreateCustomer_ThenReturnCustomerDto() {
@@ -56,5 +54,25 @@ class CustomerControllerTest {
         Assertions.assertThat(actualCustomerDto.getAddress().getPostalCode().getPostalCodeNumber()).isEqualTo(expectedCreateCustomerDto.getAddress().getPostalCode().getPostalCodeNumber());
         Assertions.assertThat(actualCustomerDto.getAddress().getPostalCode().getCity()).isEqualTo(expectedCreateCustomerDto.getAddress().getPostalCode().getCity());
         Assertions.assertThat(actualCustomerDto.getPhoneNumber()).isEqualTo(expectedCreateCustomerDto.getPhoneNumber());
+    }
+
+    @Test
+    void givenCustomerWithNullFields_WhenCreateCustomer_ThenBadRequest() {
+        //  GIVEN
+        CreateCustomerDto expectedCreateCustomerDto = new CreateCustomerDto(null,null,null,
+                null,null);
+        //  WHEN
+        //  THEN
+        RestAssured
+                .given()
+                .port(port)
+                .body(expectedCreateCustomerDto)
+                .contentType(JSON)
+                .when()
+                .accept(JSON)
+                .post("/customers")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
     }
 }
