@@ -51,7 +51,7 @@ class OrderControllerTest {
 
 
         itemInDB = new Item("Magic potion", "The famous potion brewed by Panoramix", 1000, 1);
-        itemRepository.saveItem(itemInDB);
+        itemRepository.save(itemInDB);
     }
 
     @Nested
@@ -90,7 +90,6 @@ class OrderControllerTest {
         @Test
         void givenOrderWithInvalidFields_WhenOrderItems_ThenBadRequest() {
             //  GIVEN
-            CreateItemGroupDto expectedCreateItemGroupDto = new CreateItemGroupDto(itemInDB.getItemId(), 5);
             CreateOrderDto expectedCreateOrderDto = new CreateOrderDto(customerInDB.getCustomerId(), null);
             //  WHEN
             RestAssured
@@ -134,7 +133,7 @@ class OrderControllerTest {
         @Test
         void givenItemGroupWithNotExistingItemId_WhenOrderItems_ThenBadRequest() {
             //  GIVEN
-            CreateItemGroupDto expectedCreateItemGroupDto = new CreateItemGroupDto("I don't exist", 1);
+            CreateItemGroupDto expectedCreateItemGroupDto = new CreateItemGroupDto(UUID.fromString("123e4560-e89b-12d3-a456-426614174000"), 1);
             CreateOrderDto expectedCreateOrderDto = new CreateOrderDto(customerInDB.getCustomerId(), List.of(expectedCreateItemGroupDto));
             //  WHEN
             RestAssured

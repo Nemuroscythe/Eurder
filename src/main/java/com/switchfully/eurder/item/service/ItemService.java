@@ -22,7 +22,7 @@ public class ItemService {
 
     public ItemDto addItem(CreateItemDto createItemDto) {
         Item item = itemMapper.toItem(createItemDto);
-        itemRepository.saveItem(item);
+        itemRepository.save(item);
         return itemMapper.toDto(item);
     }
 }

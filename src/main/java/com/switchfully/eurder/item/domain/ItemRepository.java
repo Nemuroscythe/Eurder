@@ -1,25 +1,12 @@
 package com.switchfully.eurder.item.domain;
 
-import org.springframework.http.HttpStatus;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.UUID;
+
 
 @Repository
-public class ItemRepository {
-    private final Map<String, Item> itemsById = new HashMap<>();
+public interface ItemRepository extends JpaRepository<Item, UUID> {
 
-    public void saveItem(Item item) {
-        itemsById.put(item.getItemId(), item);
-    }
-
-    public Item findById(String itemId) {
-        Item itemToRetrieve = itemsById.get(itemId);
-        if (itemToRetrieve == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        }
-        return itemToRetrieve;
-    }
 }

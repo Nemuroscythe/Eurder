@@ -1,14 +1,25 @@
 package com.switchfully.eurder.item.domain;
 
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
+@Entity
+@Table(name = "item")
 public class Item {
-    private final String itemId;
-    private final String name;
-    private final String description;
-    private final double price;
-    private final int stockAmount;
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue
+    private UUID itemId;
+    @Column(name = "name")
+    private String name;
+    @Column(name = "description")
+    private String description;
+    @Column(name = "price")
+    private double price;
+    @Column(name = "stock_amount")
+    private long stockAmount;
 
     public Item(Item originalItem) {
         this.itemId = originalItem.getItemId();
@@ -18,15 +29,17 @@ public class Item {
         this.stockAmount = originalItem.getStockAmount();
     }
 
-    public Item(String name, String description, double price, int stockAmount) {
-        this.itemId = UUID.randomUUID().toString();
+    public Item(String name, String description, double price, long stockAmount) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.stockAmount = stockAmount;
     }
 
-    public String getItemId() {
+    public Item() {
+    }
+
+    public UUID getItemId() {
         return itemId;
     }
 
@@ -42,7 +55,7 @@ public class Item {
         return price;
     }
 
-    public int getStockAmount() {
+    public long getStockAmount() {
         return stockAmount;
     }
 

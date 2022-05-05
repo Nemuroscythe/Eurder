@@ -2,6 +2,7 @@ package com.switchfully.eurder.item.api;
 
 import com.switchfully.eurder.item.api.dto.ItemDto;
 import com.switchfully.eurder.item.domain.Item;
+import com.switchfully.eurder.item.domain.ItemRepository;
 import com.switchfully.eurder.item.service.ItemMapper;
 import io.restassured.RestAssured;
 import org.assertj.core.api.Assertions;
@@ -24,6 +25,8 @@ class ItemControllerTest {
     private int port;
     @Autowired
     private ItemMapper itemMapper;
+    @Autowired
+    private ItemRepository itemRepository;
 
     @Test
     void givenItem_WhenAddingItem_ThenReturnItemDto() {
@@ -44,11 +47,12 @@ class ItemControllerTest {
                 .statusCode(HttpStatus.CREATED.value())
                 .extract().as(ItemDto.class);
         //  THEN
-        Assertions.assertThat(actualItemDto.getItemId()).isNotBlank();
         Assertions.assertThat(actualItemDto.getName()).isEqualTo(expectedItemDto.getName());
         Assertions.assertThat(actualItemDto.getDescription()).isEqualTo(expectedItemDto.getDescription());
         Assertions.assertThat(actualItemDto.getPrice()).isEqualTo(expectedItemDto.getPrice());
         Assertions.assertThat(actualItemDto.getStockAmount()).isEqualTo(expectedItemDto.getStockAmount());
+
+        Assertions.assertThat(itemRepository.existsById(actualItemDto.getItemId())).isTrue();
     }
 
     @Test

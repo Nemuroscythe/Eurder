@@ -10,11 +10,12 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.util.Set;
+import java.util.UUID;
 
 class CreateItemGroupDtoTest {
 
     private Validator validator;
-    private String itemId;
+    private UUID itemId;
 
     @BeforeEach
     void setUp() {

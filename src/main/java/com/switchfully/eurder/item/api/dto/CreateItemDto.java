@@ -13,9 +13,9 @@ public class CreateItemDto {
     @Positive(message = "price is negative or zero")
     private final double price;
     @PositiveOrZero(message = "stockAmount is negative")
-    private final int stockAmount;
+    private final long stockAmount;
 
-    public CreateItemDto(String name, String description, double price, int stockAmount) {
+    public CreateItemDto(String name, String description, double price, long stockAmount) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -34,7 +34,7 @@ public class CreateItemDto {
         return price;
     }
 
-    public int getStockAmount() {
+    public long getStockAmount() {
         return stockAmount;
     }
 }

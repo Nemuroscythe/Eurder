@@ -8,6 +8,7 @@ import com.switchfully.eurder.item_group.domain.ItemGroup;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public class ItemGroupMapper {
@@ -45,7 +46,7 @@ public class ItemGroupMapper {
                 .toList();
     }
 
-    public Item findItemById(String itemId) {
-        return itemRepository.findById(itemId);
+    public Item findItemById(UUID itemId) {
+        return itemRepository.findById(itemId).get();
     }
 }
