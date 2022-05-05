@@ -29,7 +29,7 @@ public class OrderService {
     }
 
     private void customerIdExist(String customerId) {
-        if (!customerRepository.exist(customerId)){
+        if (!customerRepository.exist(customerId)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
     }

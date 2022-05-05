@@ -1,7 +1,5 @@
 package com.switchfully.eurder.postal_code.api.dto;
 
-import java.util.Objects;
-
 public class PostalCodeDto {
     private final String postalCodeNumber;
     private final String city;

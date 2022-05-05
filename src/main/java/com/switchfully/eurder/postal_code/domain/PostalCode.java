@@ -1,7 +1,6 @@
 package com.switchfully.eurder.postal_code.domain;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(name = "POSTAL_CODE")

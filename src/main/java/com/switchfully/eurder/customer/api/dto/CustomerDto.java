@@ -1,7 +1,6 @@
 package com.switchfully.eurder.customer.api.dto;
 
 import com.switchfully.eurder.address.api.dto.AddressDto;
-import com.switchfully.eurder.address.api.dto.CreateAddressDto;
 
 public class CustomerDto {
 
