@@ -2,8 +2,6 @@ package com.switchfully.eurder.address.api.dto;
 
 import com.switchfully.eurder.postal_code.api.dto.PostalCodeDto;
 
-import java.util.Objects;
-
 public class AddressDto {
     private final String streetName;
     private final String streetNumber;
@@ -27,16 +25,4 @@ public class AddressDto {
         return postalCode;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AddressDto that = (AddressDto) o;
-        return Objects.equals(streetName, that.streetName) && Objects.equals(streetNumber, that.streetNumber) && Objects.equals(postalCode, that.postalCode);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(streetName, streetNumber, postalCode);
-    }
 }

@@ -3,7 +3,6 @@ package com.switchfully.eurder.order.service;
 import com.switchfully.eurder.customer.domain.CustomerRepository;
 import com.switchfully.eurder.item.domain.ItemRepository;
 import com.switchfully.eurder.item_group.api.dto.CreateItemGroupDto;
-import com.switchfully.eurder.item_group.api.dto.ItemGroupDto;
 import com.switchfully.eurder.order.api.dto.CreateOrderDto;
 import com.switchfully.eurder.order.api.dto.OrderDto;
 import com.switchfully.eurder.order.domain.Order;
@@ -40,7 +39,7 @@ public class OrderService {
     private void itemIdExist(List<CreateItemGroupDto> itemGroupList) {
         if (itemGroupList.stream()
                 .map(CreateItemGroupDto::getItemId)
-                .noneMatch(itemRepository::existsById)){
+                .noneMatch(itemRepository::existsById)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
     }

@@ -1,7 +1,6 @@
 package com.switchfully.eurder.item.domain;
 
 import javax.persistence.*;
-import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -57,18 +56,5 @@ public class Item {
 
     public long getStockAmount() {
         return stockAmount;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Item item = (Item) o;
-        return Double.compare(item.price, price) == 0 && stockAmount == item.stockAmount && Objects.equals(itemId, item.itemId) && Objects.equals(name, item.name) && Objects.equals(description, item.description);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(itemId, name, description, price, stockAmount);
     }
 }

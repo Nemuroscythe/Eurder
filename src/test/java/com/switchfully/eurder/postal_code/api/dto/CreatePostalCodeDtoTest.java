@@ -1,6 +1,5 @@
 package com.switchfully.eurder.postal_code.api.dto;
 
-import com.switchfully.eurder.address.api.dto.CreateAddressDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,7 +8,6 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-
 import java.util.Set;
 
 class CreatePostalCodeDtoTest {
@@ -39,6 +37,7 @@ class CreatePostalCodeDtoTest {
         //THEN
         Assertions.assertThat(violations.isEmpty()).isFalse();
     }
+
     @Test
     void givenNULLCity_ThenViolationConstraintNotEmpty() {
         //GIVEN

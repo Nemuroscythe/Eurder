@@ -40,7 +40,7 @@ public class OrderMapper {
     }
 
     private void customerExist(UUID customerId) {
-        if (!customerRepository.existsById(customerId)){
+        if (!customerRepository.existsById(customerId)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
     }

@@ -34,12 +34,4 @@ public class CreateAddressDto {
         return postalCode;
     }
 
-    @Override
-    public String toString() {
-        return "CreateAddressDto{" +
-                "streetName='" + streetName + '\'' +
-                ", streetNumber='" + streetNumber + '\'' +
-                ", postal code=" + postalCode +
-                '}';
-    }
 }

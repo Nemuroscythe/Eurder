@@ -3,12 +3,10 @@ package com.switchfully.eurder.customer.api;
 import com.switchfully.eurder.address.api.dto.CreateAddressDto;
 import com.switchfully.eurder.customer.api.dto.CreateCustomerDto;
 import com.switchfully.eurder.customer.api.dto.CustomerDto;
-import com.switchfully.eurder.customer.service.CustomerMapper;
 import com.switchfully.eurder.postal_code.api.dto.CreatePostalCodeDto;
 import io.restassured.RestAssured;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -58,8 +56,8 @@ class CustomerControllerTest {
     @Test
     void givenCustomerWithNullFields_WhenCreateCustomer_ThenBadRequest() {
         //  GIVEN
-        CreateCustomerDto expectedCreateCustomerDto = new CreateCustomerDto(null,null,null,
-                null,null);
+        CreateCustomerDto expectedCreateCustomerDto = new CreateCustomerDto(null, null, null,
+                null, null);
         //  WHEN
         //  THEN
         RestAssured

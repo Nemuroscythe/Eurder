@@ -5,9 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.OffsetDateTime;
-import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -70,18 +68,5 @@ public class ItemGroup {
 
     public OffsetDateTime getShippingDate() {
         return shippingDate;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ItemGroup itemGroup = (ItemGroup) o;
-        return amount == itemGroup.amount && Objects.equals(itemSnapshot, itemGroup.itemSnapshot) && Objects.equals(shippingDate, itemGroup.shippingDate);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(itemSnapshot, amount, shippingDate);
     }
 }

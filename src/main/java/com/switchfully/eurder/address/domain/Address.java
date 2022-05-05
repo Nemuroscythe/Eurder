@@ -1,10 +1,8 @@
 package com.switchfully.eurder.address.domain;
 
 import com.switchfully.eurder.postal_code.domain.PostalCode;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -50,26 +48,4 @@ public class Address {
         return postalCode;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Address address = (Address) o;
-        return Objects.equals(streetName, address.streetName) && Objects.equals(streetNumber, address.streetNumber) && Objects.equals(postalCode, address.postalCode);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(streetName, streetNumber, postalCode);
-    }
-
-    @Override
-    public String toString() {
-        return "Address{" +
-                "id=" + id +
-                ", streetName='" + streetName + '\'' +
-                ", streetNumber='" + streetNumber + '\'' +
-                ", postalCode=" + postalCode +
-                '}';
-    }
 }

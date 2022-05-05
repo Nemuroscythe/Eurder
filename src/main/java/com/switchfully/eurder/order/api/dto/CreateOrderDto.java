@@ -3,7 +3,6 @@ package com.switchfully.eurder.order.api.dto;
 import com.switchfully.eurder.item_group.api.dto.CreateItemGroupDto;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;

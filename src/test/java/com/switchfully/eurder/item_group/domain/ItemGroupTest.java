@@ -1,11 +1,9 @@
 package com.switchfully.eurder.item_group.domain;
 
 import com.switchfully.eurder.item.domain.Item;
-import com.switchfully.eurder.item_group.domain.ItemGroup;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
 import java.time.OffsetDateTime;
 
 class ItemGroupTest {

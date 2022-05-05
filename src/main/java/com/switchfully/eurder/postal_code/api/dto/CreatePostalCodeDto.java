@@ -20,12 +20,4 @@ public class CreatePostalCodeDto {
     public String getCity() {
         return city;
     }
-
-    @Override
-    public String toString() {
-        return "CreatePostalCodeDto{" +
-                "PostalCodeNumber='" + PostalCodeNumber + '\'' +
-                ", city='" + city + '\'' +
-                '}';
-    }
 }

@@ -2,9 +2,7 @@ package com.switchfully.eurder.item_group.api.dto;
 
 import com.switchfully.eurder.item.domain.Item;
 
-import java.time.LocalDate;
 import java.time.OffsetDateTime;
-import java.util.Objects;
 import java.util.UUID;
 
 public class ItemGroupDto {
@@ -25,6 +23,7 @@ public class ItemGroupDto {
     public UUID getId() {
         return id;
     }
+
     public Item getItemSnapshot() {
         return itemSnapshot;
     }
@@ -39,18 +38,5 @@ public class ItemGroupDto {
 
     public double getGroupPrice() {
         return groupPrice;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ItemGroupDto itemGroup = (ItemGroupDto) o;
-        return amount == itemGroup.amount && Objects.equals(itemSnapshot, itemGroup.itemSnapshot) && Objects.equals(shippingDate, itemGroup.shippingDate);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(itemSnapshot, amount, shippingDate);
     }
 }
