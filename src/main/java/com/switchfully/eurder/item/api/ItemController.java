@@ -6,6 +6,8 @@ import com.switchfully.eurder.item.service.ItemService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/items")
 public class ItemController {
@@ -18,7 +20,7 @@ public class ItemController {
 
     @PostMapping(consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public ItemDto addItem(@RequestBody CreateItemDto createItemDto) {
+    public ItemDto addItem(@Valid @RequestBody CreateItemDto createItemDto) {
         return itemService.addItem(createItemDto);
     }
 }
